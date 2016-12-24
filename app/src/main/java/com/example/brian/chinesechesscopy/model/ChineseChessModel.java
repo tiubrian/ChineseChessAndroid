@@ -54,7 +54,7 @@ public class ChineseChessModel {
         board = new Piece[ROW][COL];
         initializeBoard();
         //blackComputer = new ComputerPlayer('b', this);
-        //redComputer = new ComputerPlayer('r',this);
+        redComputer = new ComputerPlayer('r',this);
 
     }
 

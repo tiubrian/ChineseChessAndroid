@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/drawerLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,6 +15,7 @@
 
 
     >
+
 
 
     <!--
@@ -36,4 +41,37 @@
         android:background="@drawable/xiangqi1"
 
         />
+
 </LinearLayout>
+
+    <!-- left drawer -->
+    <!--
+    <FrameLayout
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:id="@+id/leftDrawerFrame"/>
+
+-->
+    <!-- right Drawer -->
+    <RelativeLayout android:id="@+id/rightDrawerFrame"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="@color/colorDrawer">
+
+        <NumberPicker
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/newGamePlayerNumberPicker"/>
+
+    </RelativeLayout>
+
+
+</android.support.v4.widget.DrawerLayout>

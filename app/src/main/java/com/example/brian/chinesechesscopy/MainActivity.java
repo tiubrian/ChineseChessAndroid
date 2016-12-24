@@ -1,5 +1,6 @@
 package com.example.brian.chinesechesscopy;
 
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         GridView gridview = (GridView) findViewById(R.id.boardview);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        //drawerLayout.addView(gridview);
 
         SquareAdapter squareAdapter = new SquareAdapter(this, model,gridview);
         gridview.setAdapter(squareAdapter);
