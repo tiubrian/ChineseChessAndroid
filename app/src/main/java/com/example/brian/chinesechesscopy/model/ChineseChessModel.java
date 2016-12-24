@@ -49,13 +49,33 @@ public class ChineseChessModel {
 
 
 
-    public ChineseChessModel(Context mContext) {
+    public ChineseChessModel(Context mContext, boolean redcomp, boolean blackcomp) {
         this.context = mContext;
         board = new Piece[ROW][COL];
         initializeBoard();
-        //blackComputer = new ComputerPlayer('b', this);
-        redComputer = new ComputerPlayer('r',this);
+        if(blackcomp) {
+            blackComputer = new ComputerPlayer('b', this);
+        }
+        if(redcomp) {
+            redComputer = new ComputerPlayer('r', this);
+        }
 
+    }
+
+    public void reset() {
+        board = new Piece[ROW][COL];
+        redPieces = new ArrayList<>();
+        blackPieces = new ArrayList<>();
+        selectedPosition = null;
+        //imageViewGrid = new View[ROW][COL];
+        currentPossibleMoves = new ArrayList<>();
+        turn = 'r';
+        redComputer = null;
+        blackComputer = null;
+        computerHighlight = new ArrayList<>();
+        // square adapter
+        gameOver = false;
+        initializeBoard();
     }
 
     public void play() {

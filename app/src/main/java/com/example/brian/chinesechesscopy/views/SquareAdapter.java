@@ -116,12 +116,6 @@ public class SquareAdapter extends BaseAdapter {
                     break;
                 case '-': oImageView.setImageResource(R.color.colorClear);
                     break;
-
-
-
-
-
-
             }
 
         } else {
