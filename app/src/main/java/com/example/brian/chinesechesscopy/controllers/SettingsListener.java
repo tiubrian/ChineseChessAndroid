@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.brian.chinesechesscopy.R;
 import com.example.brian.chinesechesscopy.model.ChineseChessModel;
@@ -46,6 +47,12 @@ public class SettingsListener implements View.OnClickListener {
                 boolean redcompon = redcompswitch.isChecked();
                 boolean blackcompon = blackcompswitch.isChecked();
                 if(redcompon && blackcompon) {
+                    drawerLayout.closeDrawers();
+                    CharSequence text = "You cannot have two computers play each other";
+                    int duration = Toast.LENGTH_LONG;
+
+                    Toast toast = Toast.makeText(mContext, text, duration);
+                    toast.show();
                     return;
                 }
 
