@@ -1,5 +1,6 @@
 package com.example.brian.chinesechesscopy.ai;
 
+import android.graphics.Color;
 import android.util.Log;
 
 import com.example.brian.chinesechesscopy.model.ChineseChessModel;
@@ -19,7 +20,7 @@ public class ComputerPlayer {
     private Piece[][] board;
     private ArrayList<Piece> redPieces;
     private ArrayList<Piece> blackPieces;
-    int depth = 3;
+    int depth = 1;
 
     private int[][] fowardRook = {
             {14,14,12,18,16,18,12,14,14},
@@ -261,26 +262,37 @@ public class ComputerPlayer {
     }
 
 
-    private Piece simulateMove(Move move) {
+    public Piece simulateTheMove(Move move) {
+        // Setup
         int beforeRow = move.getBefore().getRow();
         int beforeCol = move.getBefore().getCol();
         int afterRow = move.getAfter().getRow();
         int afterCol = move.getAfter().getCol();
 
-        Piece taken = board[afterRow][afterCol];
+        Piece movingPiece = board[beforeRow][beforeCol];
+        Piece takenPiece = board[afterRow][afterCol];
 
-        board[afterRow][afterCol] = board[beforeRow][beforeCol];
-        board[afterRow][afterCol].setPosition(new Position(afterRow,afterCol));
-
-        board[beforeRow][beforeCol] = new Empty(model,'-',new Position(beforeRow,beforeCol));
-
-        if(taken.getColor() == 'r') {
-            redPieces.remove(taken);
-        } else {
-            blackPieces.remove(taken);
+        // Remove stuff
+        if(takenPiece.getType() != '-') {
+            blackPieces.remove(takenPiece);
+            redPieces.remove(takenPiece);
         }
 
-        return taken;
+        // Update the move
+        Piece updated = board[beforeRow][beforeCol];
+        updated.setPosition(new Position(afterRow,afterCol));
+        board[afterRow][afterCol] = updated;
+        board[beforeRow][beforeCol] = new Empty(model, '-', new Position(beforeRow, beforeCol));
+
+
+
+/*
+        Log.d("tag", this.toString());
+        Log.d("tag", "redSize = "  + redPieces.size());
+        Log.d("tag", "blackSize = " + blackPieces.size());*/
+
+        return takenPiece;
+
     }
 
     private void undoMove(Move move, Piece taken) {
@@ -296,7 +308,7 @@ public class ComputerPlayer {
 
         if(taken.getColor() == 'r') {
             redPieces.add(taken);
-        } else {
+        } else if(taken.getColor() == 'b'){
             blackPieces.add(taken);
         }
 
@@ -305,18 +317,12 @@ public class ComputerPlayer {
 
 
     private double alphaBeta(char turn, double alpha, double beta, int depth) {
+        depth--;
+        if(depth == 0) {
+            return evaluate(color);
+        }
         return 0;
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -338,21 +344,67 @@ public class ComputerPlayer {
 
 
     public Move getMove() {
-
-
-
-        Move best = null;
+        Move move = null;
         double score = Integer.MIN_VALUE;
         double alpha = Integer.MIN_VALUE;
         double beta = Integer.MAX_VALUE;
+        ArrayList<Move> moves = getPossibleMoves(color);
 
-        ArrayList<Move> moves = generatePossibleMoves(color);
-        Collections.shuffle(moves);return moves.get(0);
+        if(moves.size() == -1){
+            return null;
+        }
+
+        //Collections.shuffle(moves);
+
+        char otherPlayer;
+        if(color == 'b') {
+            otherPlayer = 'r';
+        } else {
+            otherPlayer = 'b';
+        }
+
+        for(Move m : moves) {
+            // Make move
+            /*
+            Cell tempMove = findSquare(i);
+            tempMove.setValue(color);
+            */
+            Piece taken = simulateTheMove(m);
+
+
+            // Evaluate move
+            /*
+            if(win(color,tempMove.getRow(), tempMove.getCol())) {
+                tempMove.setValue(null);
+                return i;
+            }*/
+
+            double value = alphaBeta(otherPlayer, alpha, beta, depth);
+            if(value > score) {
+                score = value;
+                move = m;
+            }
+
+
+
+            // undo move
+            //tempMove.setValue(null);
+            undoMove(m,taken);
+        }
+
+        if(score == -1) {
+            Collections.shuffle(moves);
+            move = moves.get(0);
+        }
+
+        //System.out.println(evaluate(color));
+
+        return move;
 
 
     }
 
-    private ArrayList<Move> generatePossibleMoves(char tempColor) {
+    private ArrayList<Move> getPossibleMoves(char tempColor) {
 
         ArrayList<Piece> pieces;
         if(tempColor == 'r') {
@@ -378,5 +430,6 @@ public class ComputerPlayer {
 
         return moves;
     }
+
 
 }
