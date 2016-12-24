@@ -13,6 +13,7 @@ import com.example.brian.chinesechesscopy.views.SquareAdapter;
 import com.example.brian.chinesechesscopy.R;
 
 public class MainActivity extends AppCompatActivity {
+    // Test push
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
