@@ -1,5 +1,6 @@
 package com.example.brian.chinesechesscopy.controllers;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.media.Image;
 import android.view.View;
@@ -37,12 +38,13 @@ public class SquareListener implements View.OnClickListener {
     ImageView innerView;
     GridView gridView;
     SquareAdapter squareAdapter;
+    Context mContext;
 
 
 
 
 
-    public SquareListener(ChineseChessModel model, int row, int col, View imageView, GridView gridView, SquareAdapter squareAdapter) {
+    public SquareListener(ChineseChessModel model, int row, int col, View imageView, GridView gridView, SquareAdapter squareAdapter,Context mContext) {
         this.model = model;
         this.row = row;
         this.col = col;
@@ -50,6 +52,7 @@ public class SquareListener implements View.OnClickListener {
         this.squareAdapter = squareAdapter;
         board = model.getBoard();
         this.gridView = gridView;
+        this.mContext = mContext;
 
     }
 
@@ -60,6 +63,7 @@ public class SquareListener implements View.OnClickListener {
         if(model.isGameOver()) {
             return;
         }
+        //squareAdapter.repaint();
 
         // Weird error case
         if(count == 0 && row == 0 && col == 0) {
@@ -108,9 +112,18 @@ public class SquareListener implements View.OnClickListener {
 
 
             // Unhighlight everything
+
             model.getImageViewGrid()[source.getRow()][source.getCol()].setBackgroundColor(Color.argb(0, 0, 0, 0));
+            //model.getImageViewGrid()[source.getRow()][source.getCol()].setBackgroundResource(0);
+
+            squareAdapter.repaint();
+
+
             for (Position p : model.getCurrentPossibleMoves()) {
+
                 model.getImageViewGrid()[p.getRow()][p.getCol()].setBackgroundColor(Color.argb(0, 0, 0, 0));
+                //model.getImageViewGrid()[p.getRow()][p.getCol()].setBackgroundResource(0);
+
             }
             model.getCurrentPossibleMoves().clear();
 
@@ -122,36 +135,56 @@ public class SquareListener implements View.OnClickListener {
             if (board[row][col] != null && model.getTurn() == board[row][col].getColor()) {
                 if (model.getSelectedPosition() == null) {
                     model.getImageViewGrid()[row][col].setBackgroundColor(Color.argb(141, 0, 4, 255));
+                    //model.getImageViewGrid()[row][col].setBackgroundResource(R.drawable.select);
+
                     // possible moves
                     ArrayList<Position> validMoves = board[row][col].getPossibleMoves();
                     model.setCurrentPossibleMoves(validMoves);
                     for (Position p : validMoves) {
                         model.getImageViewGrid()[p.getRow()][p.getCol()].setBackgroundColor(Color.argb(150, 255, 64, 129));
+                       // model.getImageViewGrid()[p.getRow()][p.getCol()].setBackgroundResource(R.drawable.select);
+
                     }
                     View tempView = model.getSelectedImageView();
                     if (tempView != null) {
                         tempView.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                        //tempView.setBackgroundResource(0);
                         // undo possible moves
+
                         for (Position p : model.getCurrentPossibleMoves()) {
                             model.getImageViewGrid()[p.getRow()][p.getCol()].setBackgroundColor(Color.argb(0, 0, 0, 0));
+                            //model.getImageViewGrid()[p.getRow()][p.getCol()].setBackgroundResource(0);
+
                         }
                         model.getCurrentPossibleMoves().clear();
                     }
                     model.setSelectedPosition(new Position(row, col));
                 } else {
+
                     model.getSelectedImageView().setBackgroundColor(Color.argb(0, 0, 0, 0));
+                    //model.getSelectedImageView().setBackgroundResource(0);
+
                     // undo possible moves
+
                     for (Position p : model.getCurrentPossibleMoves()) {
                         model.getImageViewGrid()[p.getRow()][p.getCol()].setBackgroundColor(Color.argb(0, 0, 0, 0));
+                       // model.getImageViewGrid()[p.getRow()][p.getCol()].setBackgroundResource(0);
+
                     }
+
+
                     model.getCurrentPossibleMoves().clear();
                     model.setSelectedPosition(new Position(row, col));
                     model.getSelectedImageView().setBackgroundColor(Color.argb(141, 0, 4, 255));
+                    //model.getImageViewGrid()[row][col].setBackgroundResource(R.drawable.select);
+
                     // possible moves
                     ArrayList<Position> validMoves = board[row][col].getPossibleMoves();
                     model.setCurrentPossibleMoves(validMoves);
                     for (Position p : validMoves) {
                         model.getImageViewGrid()[p.getRow()][p.getCol()].setBackgroundColor(Color.argb(150, 255, 64, 129));
+                        //model.getImageViewGrid()[p.getRow()][p.getCol()].setBackgroundResource(R.drawable.select);
+
                     }
                 }
 
@@ -160,12 +193,20 @@ public class SquareListener implements View.OnClickListener {
             else {
                 View tempView = model.getSelectedImageView();
                 if (tempView != null) {
+
                     tempView.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                    //tempView.setBackgroundResource(0);
+
+
                     model.setSelectedPosition(null);
                 }
                 for (Position p : model.getCurrentPossibleMoves()) {
+
                     model.getImageViewGrid()[p.getRow()][p.getCol()].setBackgroundColor(Color.argb(0, 0, 0, 0));
+                   // model.getImageViewGrid()[p.getRow()][p.getCol()].setBackgroundResource(0);
+
                 }
+
                 model.getCurrentPossibleMoves().clear();
             }
         }
@@ -261,6 +302,7 @@ public class SquareListener implements View.OnClickListener {
 
         }
         ((ImageView) model.getImageViewGrid()[source.getRow()][source.getCol()]).setImageResource(R.color.colorClear);
+        ((ImageView) model.getImageViewGrid()[source.getRow()][source.getCol()]).setBackgroundResource(0);
 
     }
 

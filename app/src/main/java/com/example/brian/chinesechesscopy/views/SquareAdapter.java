@@ -125,7 +125,7 @@ public class SquareAdapter extends BaseAdapter {
 
 
         imageView.setTag(imageView);
-        imageView.setOnClickListener(new SquareListener(model, row, col, imageView, gridView, this));
+        imageView.setOnClickListener(new SquareListener(model, row, col, imageView, gridView, this,mContext));
 
         imageViews[row][col] = oImageView;
         return imageView;

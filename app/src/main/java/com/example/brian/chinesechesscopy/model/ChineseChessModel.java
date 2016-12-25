@@ -130,37 +130,35 @@ public class ChineseChessModel {
         Rook redRook1 = new Rook(this, 'r', new Position(9,0));
         board[9][0] = redRook1;
         redPieces.add(redRook1);
-        Horse redHorse1 = new Horse(this, 'r', new Position(9,1));
-        board[9][1] = redHorse1;
-        redPieces.add(redHorse1);
-        Elephant redElephant1 = new Elephant(this, 'r', new Position(9,2));
-        board[9][2] = redElephant1;
-        redPieces.add(redElephant1);
-        Bishop redBishop1 = new Bishop(this, 'r', new Position(9,3));
-        board[9][3] = redBishop1;
-        redPieces.add(redBishop1);
-        King redKing = new King(this, 'r', new Position(9,4));
-        board[9][4] = redKing;
-        redPieces.add(redKing);
-        Bishop redBishop2 = new Bishop(this, 'r', new Position(9,5));
-        board[9][5] = redBishop2;
-        redPieces.add(redBishop2);
-        Elephant redElephant2 = new Elephant(this, 'r', new Position(9,6));
-        board[9][6] = redElephant2;
-        redPieces.add(redElephant2);
-        Horse redHorse2 = new Horse(this, 'r', new Position(9,7));
-        board[9][7] = redHorse2;
-        redPieces.add(redHorse2);
         Rook redRook2 = new Rook(this, 'r', new Position(9,8));
         board[9][8] = redRook2;
         redPieces.add(redRook2);
-
         Cannon redCannon1 = new Cannon(this, 'r', new Position(7,1));
         board[7][1] = redCannon1;
         redPieces.add(redCannon1);
         Cannon redCannon2 = new Cannon(this, 'r', new Position(7,7));
         board[7][7] = redCannon2;
         redPieces.add(redCannon2);
+        Horse redHorse1 = new Horse(this, 'r', new Position(9,1));
+        board[9][1] = redHorse1;
+        redPieces.add(redHorse1);
+        Horse redHorse2 = new Horse(this, 'r', new Position(9,7));
+        board[9][7] = redHorse2;
+        redPieces.add(redHorse2);
+        Elephant redElephant1 = new Elephant(this, 'r', new Position(9,2));
+        board[9][2] = redElephant1;
+        redPieces.add(redElephant1);
+        Elephant redElephant2 = new Elephant(this, 'r', new Position(9,6));
+        board[9][6] = redElephant2;
+        redPieces.add(redElephant2);
+        Bishop redBishop1 = new Bishop(this, 'r', new Position(9,3));
+        board[9][3] = redBishop1;
+        redPieces.add(redBishop1);
+
+        Bishop redBishop2 = new Bishop(this, 'r', new Position(9,5));
+        board[9][5] = redBishop2;
+        redPieces.add(redBishop2);
+
 
         Pawn redPawn1 = new Pawn(this, 'r', new Position(6,0));
         board[6][0] = redPawn1;
@@ -177,42 +175,45 @@ public class ChineseChessModel {
         Pawn redPawn5 = new Pawn(this, 'r', new Position(6,8));
         board[6][8] = redPawn5;
         redPieces.add(redPawn5);
+        King redKing = new King(this, 'r', new Position(9,4));
+        board[9][4] = redKing;
+        redPieces.add(redKing);
 
         // Initialize the black pieces
-        Rook blackRook1 = new Rook(this, 'b', new Position(0,0));
-        board[0][0] = blackRook1;
-        blackPieces.add(blackRook1);
-        Horse blackHorse1 = new Horse(this,'b',new Position(0,1));
-        board[0][1] = blackHorse1;
-        blackPieces.add(blackHorse1);
-        Elephant blackElephant1 = new Elephant(this, 'b', new Position(0,2));
-        board[0][2] = blackElephant1;
-        blackPieces.add(blackElephant1);
-        Bishop blackBishop1 = new Bishop(this, 'b', new Position(0,3));
-        board[0][3] = blackBishop1;
-        blackPieces.add(blackBishop1);
-        King blackKing = new King(this,'b', new Position(0,4));
-        board[0][4] = blackKing;
-        blackPieces.add(blackKing);
-        Bishop blackBishop2 = new Bishop(this, 'b', new Position(0,5));
-        board[0][5] = blackBishop2;
-        blackPieces.add(blackBishop2);
-        Elephant blackElephant2 = new Elephant(this,'b', new Position(0,6));
-        board[0][6] = blackElephant2;
-        blackPieces.add(blackElephant2);
-        Horse blackHorse2 = new Horse(this,'b',new Position(0,7));
-        board[0][7] = blackHorse2;
-        blackPieces.add(blackHorse2);
         Rook blackRook2 = new Rook(this,'b',new Position(0,8));
         board[0][8] = blackRook2;
         blackPieces.add(blackRook2);
-
+        Rook blackRook1 = new Rook(this, 'b', new Position(0,0));
+        board[0][0] = blackRook1;
+        blackPieces.add(blackRook1);
         Cannon blackCannon1 = new Cannon(this,'b',new Position(2,1));
         board[2][1] = blackCannon1;
         blackPieces.add(blackCannon1);
         Cannon blackCannon2 = new Cannon(this,'b',new Position(2,7));
         board[2][7] = blackCannon2;
         blackPieces.add(blackCannon2);
+        Horse blackHorse2 = new Horse(this,'b',new Position(0,7));
+        board[0][7] = blackHorse2;
+        blackPieces.add(blackHorse2);
+        Horse blackHorse1 = new Horse(this,'b',new Position(0,1));
+        board[0][1] = blackHorse1;
+        blackPieces.add(blackHorse1);
+
+        Elephant blackElephant1 = new Elephant(this, 'b', new Position(0,2));
+        board[0][2] = blackElephant1;
+        blackPieces.add(blackElephant1);
+        Elephant blackElephant2 = new Elephant(this,'b', new Position(0,6));
+        board[0][6] = blackElephant2;
+        blackPieces.add(blackElephant2);
+        Bishop blackBishop1 = new Bishop(this, 'b', new Position(0,3));
+        board[0][3] = blackBishop1;
+        blackPieces.add(blackBishop1);
+
+        Bishop blackBishop2 = new Bishop(this, 'b', new Position(0,5));
+        board[0][5] = blackBishop2;
+        blackPieces.add(blackBishop2);
+
+
 
         Pawn blackPawn1 = new Pawn(this,'b', new Position(3,0));
         board[3][0] = blackPawn1;
@@ -229,6 +230,9 @@ public class ChineseChessModel {
         Pawn blackPawn5 = new Pawn(this, 'b', new Position(3,8));
         board[3][8] = blackPawn5;
         blackPieces.add(blackPawn5);
+        King blackKing = new King(this,'b', new Position(0,4));
+        board[0][4] = blackKing;
+        blackPieces.add(blackKing);
 
     }
 
@@ -286,28 +290,50 @@ public class ChineseChessModel {
 
 
     public void switchTurn() {
+        //Log.d("tag", "1");
+
         if(turn == 'r') {
             turn = 'b';
+          //  Log.d("tag", "2");
 
             if(generatePossibleMoves('b').size() == 0) {
-                CharSequence text = "Red Wins!";
-                int duration = Toast.LENGTH_LONG;
+            //    Log.d("tag", "3");
+                CharSequence text = "Red wins";
+                int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+
                 gameOver = true;
                 return;
             }
+            //Log.d("tag", "4");
+
             if(blackComputer != null) {
+              //  Log.d("tag", "5");
+
+                CharSequence text = "Computer is thinking...";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 Move move = blackComputer.getMove();
+                //Log.d("tag", "5.3");
+
                 simulateMove(move);
+                //Log.d("tag", "5.5");
+
                 switchTurn();
             }
+            //Log.d("tag", "6");
 
         } else {
             turn = 'r';
+            //Log.d("tag", "7");
 
             if(generatePossibleMoves('r').size() == 0) {
+              //  Log.d("tag", "8");
+
                 CharSequence text = "Black Wins!";
                 int duration = Toast.LENGTH_LONG;
 
@@ -316,12 +342,22 @@ public class ChineseChessModel {
                 gameOver = true;
                 return;
             }
+            //Log.d("tag", "9");
+
             if(redComputer != null) {
+              //  Log.d("tag", "0");
+                CharSequence text = "Computer is thinking...";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 Move move = redComputer.getMove();
                 simulateMove(move);
                 switchTurn();
 
             }
+            //Log.d("tag", "11");
+
 
         }
     }

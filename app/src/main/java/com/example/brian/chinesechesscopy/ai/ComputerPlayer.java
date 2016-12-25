@@ -8,6 +8,7 @@ import com.example.brian.chinesechesscopy.model.Position;
 import com.example.brian.chinesechesscopy.model.pieces.Empty;
 import com.example.brian.chinesechesscopy.model.pieces.Piece;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -20,7 +21,7 @@ public class ComputerPlayer {
     private Piece[][] board;
     private ArrayList<Piece> redPieces;
     private ArrayList<Piece> blackPieces;
-    int depth = 1;
+    int depth = 2;
 
     private int[][] fowardRook = {
             {14,14,12,18,16,18,12,14,14},
@@ -159,11 +160,11 @@ public class ComputerPlayer {
                     switch (board[i][j].getType()) {
                         case 'R':
                             value += 600;
-                            value += fowardRook[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                           // value += fowardRook[i][j];
                             break;
                         case 'H':
                             value += 270;
-                            value += fowardHorse[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                            //value += fowardHorse[i][j];
                             break;
                         case 'E':
                             value += 120;
@@ -176,19 +177,19 @@ public class ComputerPlayer {
                             break;
                         case 'C':
                             value += 285;
-                            value += fowardCannon[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                            //value += fowardCannon[i][j];
                             break;
                         case 'P':
                             value += 30;
-                            value += fowardPawn[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                            //value += fowardPawn[i][j];
                             break;
 
 
                         case 'r': value -= 600;
-                            value -= backwardRook[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                            //value -= backwardRook[i][j];
                             break;
                         case 'h': value -= 270;
-                            value -= backwardHorse[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                            //value -= backwardHorse[i][j];
                             break;
                         case 'e': value -= 120;
                             break;
@@ -197,10 +198,10 @@ public class ComputerPlayer {
                         case 'k': value -= 6000;
                             break;
                         case 'c': value -= 285;
-                            value -= backwardCannon[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                            //value -= backwardCannon[i][j];
                             break;
                         case 'p': value -= 30;
-                            value -= backwardPawn[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                            //value -= backwardPawn[i][j];
                             break;
                     }
                 }
@@ -211,11 +212,11 @@ public class ComputerPlayer {
                     switch (board[i][j].getType()) {
                         case 'R':
                             value -= 600;
-                            value -= fowardRook[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                            //value -= fowardRook[i][j];
                             break;
                         case 'H':
                             value -= 270;
-                            value -= fowardHorse[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                            //value -= fowardHorse[i][j];
                             break;
                         case 'E':
                             value -= 120;
@@ -228,19 +229,19 @@ public class ComputerPlayer {
                             break;
                         case 'C':
                             value -= 285;
-                            value -= fowardCannon[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                            //value -= fowardCannon[i][j];
                             break;
                         case 'P':
                             value -= 30;
-                            value -= fowardPawn[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                            //value -= fowardPawn[i][j];
                             break;
 
 
                         case 'r': value += 600;
-                            value += backwardRook[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                            //value += backwardRook[i][j];
                             break;
                         case 'h': value += 270;
-                            value += backwardHorse[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                            //value += backwardHorse[i][j];
                             break;
                         case 'e': value += 120;
                             break;
@@ -249,10 +250,10 @@ public class ComputerPlayer {
                         case 'k': value += 6000;
                             break;
                         case 'c': value += 285;
-                            value += backwardCannon[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                           // value += backwardCannon[i][j];
                             break;
                         case 'p': value += 30;
-                            value += backwardPawn[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                            //value += backwardPawn[i][j];
                             break;
                     }
                 }
@@ -316,12 +317,94 @@ public class ComputerPlayer {
 
 
 
-    private double alphaBeta(char turn, double alpha, double beta, int depth) {
+    private double alphaBeta(char turn, double alpha, double beta, int depth, ArrayList<Move> possibleMoves) {
         depth--;
         if(depth == 0) {
             return evaluate(color);
         }
-        return 0;
+        //ArrayList<Integer> possibleMoves = getPossibleMoves();
+        if(possibleMoves.size() == 0) {
+            return evaluate(color);
+        }
+        if(turn == color) {
+            for(Move m : possibleMoves) {
+                /*
+                Cell tempMove = findSquare(m);
+                tempMove.setValue(turn);*/
+                Piece taken = simulateTheMove(m);
+/*
+                if(win(turn,tempMove.getRow(), tempMove.getCol())) {
+                    tempMove.setValue(null);
+                    return 10000;
+                }*/
+
+                char otherPlayer;
+                if(turn == 'b') {
+                    otherPlayer ='r';
+                } else {
+                    otherPlayer = 'b';
+                }
+                ArrayList<Move> newPossibleMoves = getPossibleMoves(turn);
+
+                if(newPossibleMoves.size() == 0) {
+                    undoMove(m,taken);
+                    return 10000;
+                }
+                double score = alphaBeta(otherPlayer, alpha, beta, depth,newPossibleMoves);
+                if(score > alpha) {
+                    alpha = score;
+                }
+                if(alpha >= beta) {
+                    //tempMove.setValue(null);
+                    undoMove(m,taken);
+                    return alpha;
+                }
+                //tempMove.setValue(null);
+                undoMove(m,taken);
+
+            }
+            return alpha;
+        } else {
+            for(Move m : possibleMoves) {
+                /*
+                Cell tempMove = findSquare(m);
+                tempMove.setValue(turn);
+                */
+                Piece taken = simulateTheMove(m);
+
+                /*
+                if(win(turn,tempMove.getRow(), tempMove.getCol())) {
+                    tempMove.setValue(null);
+                    return -10000;
+                }*/
+
+                char otherPlayer;
+                if(turn == 'b') {
+                    otherPlayer = 'r';
+                } else {
+                    otherPlayer = 'b';
+                }
+                ArrayList<Move> newPossibleMoves = getPossibleMoves(otherPlayer);
+
+                if(newPossibleMoves.size() == 0) {
+                    undoMove(m,taken);
+                    return -10000;
+                }
+                double score = alphaBeta(otherPlayer, alpha, beta, depth,newPossibleMoves);
+                if(score < beta) {
+                    beta = score;
+                }
+                if(alpha >= beta) {
+                    //tempMove.setValue(null);
+                    undoMove(m,taken);
+                    return beta;
+                }
+                //tempMove.setValue(null);
+                undoMove(m,taken);
+
+            }
+            return beta;
+        }
     }
 
 
@@ -379,7 +462,8 @@ public class ComputerPlayer {
                 return i;
             }*/
 
-            double value = alphaBeta(otherPlayer, alpha, beta, depth);
+            ArrayList<Move> possibleMoves = getPossibleMoves(color);
+            double value = alphaBeta(otherPlayer, alpha, beta, depth,possibleMoves);
             if(value > score) {
                 score = value;
                 move = m;
@@ -398,7 +482,7 @@ public class ComputerPlayer {
         }
 
         //System.out.println(evaluate(color));
-
+        Log.d("tag",evaluate('b')+"");
         return move;
 
 
