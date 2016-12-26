@@ -1,5 +1,6 @@
 package com.example.brian.chinesechesscopy.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -288,17 +289,103 @@ public class ChineseChessModel {
         return false;
     }
 
+    class AITurn implements Runnable {
 
-    public void switchTurn() {
-        //Log.d("tag", "1");
+        @Override
+        public void run() {
+
+            synchronized (this) {
+                long time = System.currentTimeMillis();
+                if (System.currentTimeMillis() - time < 1000L) {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (Exception localException) {
+
+                    }
+                }
+                final Move move = blackComputer.getMove();
+                //simulateMove(move);
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        simulateMove(move);
+                    }
+                });
+
+
+                if (System.currentTimeMillis() - time < 1000L) {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (Exception localException) {
+
+                    }
+                }
+
+            }
+            ((Activity)context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //squareAdapter.repaint();
+                }
+            });
+
+            switchTurn();
+
+        }
+    }
+
+    class AITurnRed implements Runnable {
+
+        @Override
+        public void run() {
+
+            synchronized (this) {
+                long time = System.currentTimeMillis();
+                if (System.currentTimeMillis() - time < 1000L) {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (Exception localException) {
+
+                    }
+                }
+                final Move move = redComputer.getMove();
+                //simulateMove(move);
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        simulateMove(move);
+                    }
+                });
+
+
+                if (System.currentTimeMillis() - time < 1000L) {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (Exception localException) {
+
+                    }
+                }
+
+            }
+            ((Activity)context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //squareAdapter.repaint();
+                }
+            });
+
+            switchTurn();
+
+        }
+    }
+
+    public synchronized void switchTurn() {
 
         if(turn == 'r') {
             turn = 'b';
-          //  Log.d("tag", "2");
 
             if(generatePossibleMoves('b').size() == 0) {
-            //    Log.d("tag", "3");
-                CharSequence text = "Red wins";
+                CharSequence text = "Red wins!";
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
@@ -307,32 +394,26 @@ public class ChineseChessModel {
                 gameOver = true;
                 return;
             }
-            //Log.d("tag", "4");
 
             if(blackComputer != null) {
-              //  Log.d("tag", "5");
 
                 CharSequence text = "Computer is thinking...";
-                int duration = Toast.LENGTH_SHORT;
+                int duration = Toast.LENGTH_LONG;
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
-                Move move = blackComputer.getMove();
-                //Log.d("tag", "5.3");
 
-                simulateMove(move);
-                //Log.d("tag", "5.5");
+                //Move move = blackComputer.getMove();
+                //simulateMove(move);
+                //switchTurn();
+                new Thread(new AITurn()).start();
 
-                switchTurn();
             }
-            //Log.d("tag", "6");
 
         } else {
             turn = 'r';
-            //Log.d("tag", "7");
 
             if(generatePossibleMoves('r').size() == 0) {
-              //  Log.d("tag", "8");
 
                 CharSequence text = "Black Wins!";
                 int duration = Toast.LENGTH_LONG;
@@ -342,27 +423,27 @@ public class ChineseChessModel {
                 gameOver = true;
                 return;
             }
-            //Log.d("tag", "9");
 
             if(redComputer != null) {
-              //  Log.d("tag", "0");
                 CharSequence text = "Computer is thinking...";
-                int duration = Toast.LENGTH_SHORT;
+                int duration = Toast.LENGTH_LONG;
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+                /*
                 Move move = redComputer.getMove();
                 simulateMove(move);
-                switchTurn();
+                switchTurn();*/
+                new Thread(new AITurnRed()).start();
+
 
             }
-            //Log.d("tag", "11");
 
 
         }
     }
 
-    public void simulateMove(Move move) {
+    public synchronized void simulateMove(Move move) {
         // Setup
         int beforeRow = move.getBefore().getRow();
         int beforeCol = move.getBefore().getCol();

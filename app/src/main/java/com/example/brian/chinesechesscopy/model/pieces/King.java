@@ -100,7 +100,7 @@ public class King extends Piece {
             }
         } else {
             int col = position.getCol();
-            for (int i = position.getRow()-2; i >= 0; i--) {
+            for (int i = position.getRow()-1; i >= 0; i--) {
                 if(model.getBoard()[i][col].getType() != 'k' && model.getBoard()[i][col].getType() != '-') {
                     break;
                 }

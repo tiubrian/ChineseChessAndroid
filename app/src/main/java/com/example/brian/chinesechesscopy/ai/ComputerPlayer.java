@@ -92,6 +92,19 @@ public class ComputerPlayer {
         createBackwardsMatrices();
     }
 
+    private String backwardRookToString() {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 9; j++) {
+                sb.append(backwardRook[i][j] + ", ");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+
+
 
     private int evaluateRed() {
         int value = 0;
@@ -100,10 +113,10 @@ public class ComputerPlayer {
         for(int i = 0; i < redPieces.size(); i++) {
             switch (redPieces.get(i).getType()) {
                 case 'R': value += 600;
-                    //value += fowardRook[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                    value += fowardRook[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
                     break;
                 case 'H': value += 270;
-                    //value += fowardHorse[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                    value += fowardHorse[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
                     break;
                 case 'E': value += 120;
                     break;
@@ -112,10 +125,10 @@ public class ComputerPlayer {
                 case 'K': value += 6000;
                     break;
                 case 'C': value += 285;
-                    //value += fowardCannon[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                    value += fowardCannon[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
                     break;
                 case 'P': value += 30;
-                    //value += fowardPawn[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                    value += fowardPawn[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
                     break;
             }
         }
@@ -154,17 +167,138 @@ public class ComputerPlayer {
 
     private int evaluate(char color) {
         int value = 0;
-        if(color == 'r') {
+
+        if (this.color == 'r') {
+            for (int i = 0; i < redPieces.size(); i++) {
+                switch (redPieces.get(i).getType()) {
+                    case 'R':
+                        value += 600;
+                        //value += fowardRook[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                        break;
+                    case 'H':
+                        value += 270;
+                        //value += fowardHorse[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                        break;
+                    case 'E':
+                        value += 120;
+                        break;
+                    case 'B':
+                        value += 120;
+                        break;
+                    case 'K':
+                        value += 6000;
+                        break;
+                    case 'C':
+                        value += 285;
+                        //value += fowardCannon[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                        break;
+                    case 'P':
+                        value += 30;
+                        //value += fowardPawn[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                        break;
+                }
+            }
+            for (int i = 0; i < model.getBlackPieces().size(); i++) {
+                switch (model.getBlackPieces().get(i).getType()) {
+                    case 'R':
+                        value -= 600;
+                        //value -= fowardRook[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                        break;
+                    case 'H':
+                        value -= 270;
+                        //value -= fowardHorse[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                        break;
+                    case 'E':
+                        value -= 120;
+                        break;
+                    case 'B':
+                        value -= 120;
+                        break;
+                    case 'K':
+                        value -= 6000;
+                        break;
+                    case 'C':
+                        value -= 285;
+                        //value -= fowardCannon[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                        break;
+                    case 'P':
+                        value -= 30;
+                        //value -= fowardPawn[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                        break;
+                }
+            }
+        } else{
+            for (int i = 0; i < redPieces.size(); i++) {
+                switch (redPieces.get(i).getType()) {
+                    case 'R':
+                        value -= 600;
+                        //value -= fowardRook[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                        break;
+                    case 'H':
+                        value -= 270;
+                        //value -= fowardHorse[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                        break;
+                    case 'E':
+                        value -= 120;
+                        break;
+                    case 'B':
+                        value -= 120;
+                        break;
+                    case 'K':
+                        value -= 6000;
+                        break;
+                    case 'C':
+                        value -= 285;
+                        //value -= fowardCannon[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                        break;
+                    case 'P':
+                        value -= 30;
+                        //value -= fowardPawn[redPieces.get(i).getPosition().getRow()][redPieces.get(i).getPosition().getCol()];
+                        break;
+                }
+            }
+            for (int i = 0; i < model.getBlackPieces().size(); i++) {
+                switch (model.getBlackPieces().get(i).getType()) {
+                    case 'R':
+                        value += 600;
+                        //value += fowardRook[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                        break;
+                    case 'H':
+                        value += 270;
+                        //value += fowardHorse[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                        break;
+                    case 'E':
+                        value += 120;
+                        break;
+                    case 'B':
+                        value += 120;
+                        break;
+                    case 'K':
+                        value += 6000;
+                        break;
+                    case 'C':
+                        value += 285;
+                        //value += fowardCannon[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                        break;
+                    case 'P':
+                        value += 30;
+                        //value += fowardPawn[blackPieces.get(i).getPosition().getRow()][blackPieces.get(i).getPosition().getCol()];
+                        break;
+                }
+            }
+        }
+        /*
+        if(this.color == 'r') {
             for(int i = 0; i< 10; i++) {
                 for (int j = 0; j < 9; j++) {
                     switch (board[i][j].getType()) {
                         case 'R':
                             value += 600;
-                           // value += fowardRook[i][j];
+                            value += fowardRook[i][j];
                             break;
                         case 'H':
                             value += 270;
-                            //value += fowardHorse[i][j];
+                            value += fowardHorse[i][j];
                             break;
                         case 'E':
                             value += 120;
@@ -177,19 +311,19 @@ public class ComputerPlayer {
                             break;
                         case 'C':
                             value += 285;
-                            //value += fowardCannon[i][j];
+                            value += fowardCannon[i][j];
                             break;
                         case 'P':
                             value += 30;
-                            //value += fowardPawn[i][j];
+                            value += fowardPawn[i][j];
                             break;
 
 
                         case 'r': value -= 600;
-                            //value -= backwardRook[i][j];
+                            value -= backwardRook[i][j];
                             break;
                         case 'h': value -= 270;
-                            //value -= backwardHorse[i][j];
+                            value -= backwardHorse[i][j];
                             break;
                         case 'e': value -= 120;
                             break;
@@ -198,10 +332,10 @@ public class ComputerPlayer {
                         case 'k': value -= 6000;
                             break;
                         case 'c': value -= 285;
-                            //value -= backwardCannon[i][j];
+                            value -= backwardCannon[i][j];
                             break;
                         case 'p': value -= 30;
-                            //value -= backwardPawn[i][j];
+                            value -= backwardPawn[i][j];
                             break;
                     }
                 }
@@ -250,7 +384,7 @@ public class ComputerPlayer {
                         case 'k': value += 6000;
                             break;
                         case 'c': value += 285;
-                           // value += backwardCannon[i][j];
+                            //value += backwardCannon[i][j];
                             break;
                         case 'p': value += 30;
                             //value += backwardPawn[i][j];
@@ -258,7 +392,7 @@ public class ComputerPlayer {
                     }
                 }
             }
-        }
+        }*/
         return value;
     }
 
@@ -323,9 +457,7 @@ public class ComputerPlayer {
             return evaluate(color);
         }
         //ArrayList<Integer> possibleMoves = getPossibleMoves();
-        if(possibleMoves.size() == 0) {
-            return evaluate(color);
-        }
+
         if(turn == color) {
             for(Move m : possibleMoves) {
                 /*
@@ -344,7 +476,7 @@ public class ComputerPlayer {
                 } else {
                     otherPlayer = 'b';
                 }
-                ArrayList<Move> newPossibleMoves = getPossibleMoves(turn);
+                ArrayList<Move> newPossibleMoves = getPossibleMoves(otherPlayer);
 
                 if(newPossibleMoves.size() == 0) {
                     undoMove(m,taken);
@@ -462,7 +594,10 @@ public class ComputerPlayer {
                 return i;
             }*/
 
-            ArrayList<Move> possibleMoves = getPossibleMoves(color);
+            ArrayList<Move> possibleMoves = getPossibleMoves(otherPlayer);
+            if(possibleMoves.size()==0){
+                return m;
+            }
             double value = alphaBeta(otherPlayer, alpha, beta, depth,possibleMoves);
             if(value > score) {
                 score = value;
